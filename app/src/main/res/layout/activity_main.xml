@@ -22,6 +22,7 @@
         android:tag="main"
         android:text="@string/main_base_title"
         android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier
@@ -30,7 +31,9 @@
         android:layout_height="wrap_content"
         app:barrierDirection="end"
         app:barrierMargin="30dp"
-        app:constraint_referenced_ids="main_lastName_title,main_firstName_title,main_birthDate_title, main_nationality_title, main_occupation_title" />
+        app:constraint_referenced_ids="main_lastName_title,main_firstName_title,main_birthDate_title,
+        main_nationality_title, main_occupation_title,student_school_name_title,
+        student_diploma_year_title,worker_company_title,worker_experience_title,worker_sector_title" />
 
     <TextView
         android:id="@+id/main_lastName_title"
@@ -135,6 +138,7 @@
         app:layout_constraintTop_toBottomOf="@id/main_nationality_title" />
 
     <RadioGroup
+        android:id="@+id/main_occupation_radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -154,5 +158,146 @@
             android:tag="main"
             android:text="@string/main_base_occupation_worker" />
     </RadioGroup>
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_student"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:constraint_referenced_tags="student"
+        app:layout_constraintTop_toBottomOf="@id/main_occupation_radioGroup" />
+
+    <TextView
+        android:id="@+id/student_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="student"
+        android:text="@string/main_specific_students_title"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_occupation_radioGroup" />
+
+    <TextView
+        android:id="@+id/student_school_name_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="student"
+        android:text="@string/main_specific_school_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/student_school_name_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/student_school_name_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="schoolName"
+        android:hint="@string/main_specific_school_title"
+        android:inputType="textPersonName"
+        android:tag="main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/student_details_title" />
+
+    <TextView
+        android:id="@+id/student_diploma_year_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="student"
+        android:text="@string/main_specific_graduationyear_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/student_diploma_year_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/student_diploma_year_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="diplomaYear"
+        android:hint="@string/main_specific_graduationyear_title"
+        android:inputType="textPersonName"
+        android:tag="main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/student_school_name_editText" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_worker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:constraint_referenced_tags="worker"
+        app:layout_constraintTop_toBottomOf="@id/student_diploma_year_editText" />
+
+    <TextView
+        android:id="@+id/worker_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="worker"
+        android:text="@string/main_specific_workers_title"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/student_diploma_year_editText" />
+
+    <TextView
+        android:id="@+id/worker_company_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="worker"
+        android:text="@string/main_specific_compagny_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/worker_company_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/worker_company_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="companyName"
+        android:hint="@string/main_specific_compagny_title"
+        android:inputType="textPersonName"
+        android:tag="main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/worker_details_title" />
+
+    <TextView
+        android:id="@+id/worker_sector_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="main"
+        android:text="@string/main_specific_sector_title"
+        app:layout_constraintBottom_toBottomOf="@id/worker_sector_spinner"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/worker_sector_spinner" />
+
+    <Spinner
+        android:id="@+id/worker_sector_spinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:tag="main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/worker_company_editText" />
+
+    <TextView
+        android:id="@+id/worker_experience_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="worker"
+        android:text="@string/main_specific_experience_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/worker_experience_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/worker_experience_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="experience"
+        android:hint="@string/main_specific_experience_title"
+        android:inputType="textPersonName"
+        android:tag="main"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/worker_sector_spinner" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
