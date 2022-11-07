@@ -192,8 +192,8 @@
         android:layout_height="wrap_content"
         android:autofillHints="schoolName"
         android:hint="@string/main_specific_school_title"
-        android:inputType="textPersonName"
-        android:tag="main"
+        android:inputType="textNoSuggestions"
+        android:tag="student"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/student_details_title" />
@@ -213,8 +213,8 @@
         android:layout_height="wrap_content"
         android:autofillHints="diplomaYear"
         android:hint="@string/main_specific_graduationyear_title"
-        android:inputType="textPersonName"
-        android:tag="main"
+        android:inputType="number"
+        android:tag="student"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/student_school_name_editText" />
@@ -252,8 +252,8 @@
         android:layout_height="wrap_content"
         android:autofillHints="companyName"
         android:hint="@string/main_specific_compagny_title"
-        android:inputType="textPersonName"
-        android:tag="main"
+        android:inputType="textNoSuggestions"
+        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_details_title" />
@@ -262,7 +262,7 @@
         android:id="@+id/worker_sector_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
+        android:tag="worker"
         android:text="@string/main_specific_sector_title"
         app:layout_constraintBottom_toBottomOf="@id/worker_sector_spinner"
         app:layout_constraintStart_toStartOf="parent"
@@ -273,7 +273,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="main"
+        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_company_editText" />
@@ -293,11 +293,93 @@
         android:layout_height="wrap_content"
         android:autofillHints="experience"
         android:hint="@string/main_specific_experience_title"
-        android:inputType="textPersonName"
-        android:tag="main"
+        android:inputType="number"
+        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_sector_spinner" />
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/group_additional"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        app:constraint_referenced_tags="additional"
+        app:layout_constraintTop_toBottomOf="@id/worker_experience_editText" />
+
+    <TextView
+        android:id="@+id/additional_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="additional"
+        android:text="@string/additional_title"
+        android:textAllCaps="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/worker_experience_editText" />
+
+    <TextView
+        android:id="@+id/additional_email_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="additional"
+        android:text="@string/additional_email_title"
+        app:layout_constraintBaseline_toBaselineOf="@id/additional_email_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/additional_email_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="emailAddress"
+        android:hint="@string/additional_email_title"
+        android:inputType="textEmailAddress"
+        android:tag="additional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/main_barrier"
+        app:layout_constraintTop_toBottomOf="@id/additional_title" />
+
+    <TextView
+        android:id="@+id/additional_remarks_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:tag="additional"
+        android:text="@string/additional_remarks_title"
+        app:layout_constraintTop_toBottomOf="@id/additional_email_editText"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/additional_remarks_editText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:autofillHints="remarks"
+        android:inputType="textMultiLine"
+        android:tag="additional"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/additional_remarks_title" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/cancel_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:tag="additional"
+        android:text="@string/btn_cancel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/ok_button"
+        app:layout_constraintTop_toBottomOf="@id/additional_remarks_editText" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:tag="additional"
+        android:text="@string/btn_ok"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintTop_toBottomOf="@id/additional_remarks_editText" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
