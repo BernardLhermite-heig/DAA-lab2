@@ -91,7 +91,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="birthdate"
-        android:inputType="date"
+        android:inputType="none"
         android:tag="main"
         app:layout_constraintEnd_toStartOf="@id/main_birthDate_button"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
@@ -147,12 +147,14 @@
         app:layout_constraintTop_toBottomOf="@id/main_occupation_title">
 
         <RadioButton
+            android:id="@+id/main_occupation_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="main"
             android:text="@string/main_base_occupation_student" />
 
         <RadioButton
+            android:id="@+id/main_occupation_worker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:tag="main"
@@ -344,8 +346,8 @@
         android:layout_height="wrap_content"
         android:tag="additional"
         android:text="@string/additional_remarks_title"
-        app:layout_constraintTop_toBottomOf="@id/additional_email_editText"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/additional_email_editText" />
 
     <EditText
         android:id="@+id/additional_remarks_editText"
@@ -365,8 +367,8 @@
         android:layout_marginTop="10dp"
         android:tag="additional"
         android:text="@string/btn_cancel"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@id/ok_button"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/additional_remarks_editText" />
 
     <com.google.android.material.button.MaterialButton
@@ -379,7 +381,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cancel_button"
         app:layout_constraintTop_toBottomOf="@id/additional_remarks_editText" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

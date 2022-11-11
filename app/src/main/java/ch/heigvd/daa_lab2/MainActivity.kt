@@ -6,52 +6,44 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
     private var type = -1
-    private lateinit var btnSubmit : Button
-    private lateinit var btnDatePicker : Button
-    private lateinit var btnReset : Button
-    private lateinit var txtDate : EditText
-    private lateinit var txtName : EditText
-    private lateinit var txtFirstName : EditText
-    private lateinit var txtEmail : EditText
-    private lateinit var txtRemark : EditText
-    private lateinit var txtSchool : EditText
-    private lateinit var txtGraduationYear : EditText
-    private lateinit var txtCompany : EditText
-    private lateinit var txtSeniority : EditText
-    private lateinit var spnNationality : Spinner
-    private lateinit var spnDepartment : Spinner
-    private lateinit var radStudent : RadioButton
-    private lateinit var radWorker : RadioButton
+    private lateinit var btnSubmit: Button
+    private lateinit var btnDatePicker: ImageButton
+    private lateinit var btnReset: Button
+    private lateinit var txtDate: EditText
+    private lateinit var txtLastName: EditText
+    private lateinit var txtFirstName: EditText
+    private lateinit var txtEmail: EditText
+    private lateinit var txtRemark: EditText
+    private lateinit var txtSchool: EditText
+    private lateinit var txtGraduationYear: EditText
+    private lateinit var txtCompany: EditText
+    private lateinit var txtExperience: EditText
+    private lateinit var spnNationality: Spinner
+    private lateinit var spnSector: Spinner
+    private lateinit var radStudent: RadioButton
+    private lateinit var radWorker: RadioButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
 
+        txtDate.setOnClickListener {
+            showDatePicker()
+        }
+        txtDate.keyListener = null
+
         btnDatePicker.setOnClickListener {
-            var selectDate = if(txtDate.text.toString().isNotEmpty()) {
-                Date(txtDate.text.toString())
-            } else {
-                Calendar.getInstance().time
-            }
-
-            val calendarConstraints = CalendarConstraints.Builder()
-            calendarConstraints.setOpenAt(selectDate.month.toLong())
-
-            val datePickerBuilder = MaterialDatePicker.Builder.datePicker()
-            datePickerBuilder.setCalendarConstraints(calendarConstraints.build())
-            datePickerBuilder.setSelection(selectDate.time)
-
-            val datePicker = datePickerBuilder.build()
-            datePicker.show(supportFragmentManager, "DatePicker")
-
-            datePicker.addOnPositiveButtonClickListener {
-                txtDate.setText(Date(it).toString())
-            }
+            showDatePicker()
         }
 
         btnSubmit.setOnClickListener {
@@ -60,6 +52,34 @@ class MainActivity : AppCompatActivity() {
 
         btnReset.setOnClickListener {
             reset()
+        }
+    }
+
+    private fun showDatePicker() {
+        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+
+        val selectedDate = if (txtDate.text.isNotEmpty()) {
+            LocalDate.parse(txtDate.text.toString(), formatter)
+        } else {
+            LocalDate.now()
+        }
+
+        val selectedDateInMilli =
+            selectedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
+
+        val calendarConstraints = CalendarConstraints.Builder()
+            .setOpenAt(selectedDateInMilli)
+
+        val datePickerBuilder = MaterialDatePicker.Builder.datePicker()
+        datePickerBuilder.setCalendarConstraints(calendarConstraints.build())
+        datePickerBuilder.setSelection(selectedDateInMilli)
+
+        val datePicker = datePickerBuilder.build()
+        datePicker.show(supportFragmentManager, null)
+
+        datePicker.addOnPositiveButtonClickListener {
+            val date = LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
+            txtDate.setText(date.format(formatter))
         }
     }
 
@@ -89,27 +109,27 @@ class MainActivity : AppCompatActivity() {
         return cal
     }
 
-    private fun init(){
-        btnSubmit = findViewById(R.id.submit)
-        btnDatePicker = findViewById(R.id.datePicker)
-        btnReset = findViewById(R.id.reset)
-        txtDate = findViewById(R.id.dateLabel)
-        txtName = findViewById(R.id.name)
-        txtFirstName = findViewById(R.id.firstName)
-        txtEmail = findViewById(R.id.email)
-        txtRemark = findViewById(R.id.remark)
-        txtSchool = findViewById(R.id.school)
-        txtGraduationYear = findViewById(R.id.graduateYear)
-        txtCompany = findViewById(R.id.company)
-        txtSeniority = findViewById(R.id.seniority)
-        spnNationality = findViewById(R.id.nationality)
-        spnDepartment = findViewById(R.id.department)
-        radStudent = findViewById(R.id.radio_student)
-        radWorker = findViewById(R.id.radio_worker)
+    private fun init() {
+        btnSubmit = findViewById(R.id.ok_button)
+        btnDatePicker = findViewById(R.id.main_birthDate_button)
+        btnReset = findViewById(R.id.cancel_button)
+        txtDate = findViewById(R.id.main_birthDate_editText)
+        txtLastName = findViewById(R.id.main_lastName_editText)
+        txtFirstName = findViewById(R.id.main_firstName_editText)
+        txtEmail = findViewById(R.id.additional_email_editText)
+        txtRemark = findViewById(R.id.additional_remarks_editText)
+        txtSchool = findViewById(R.id.student_school_name_editText)
+        txtGraduationYear = findViewById(R.id.student_diploma_year_editText)
+        txtCompany = findViewById(R.id.worker_company_editText)
+        txtExperience = findViewById(R.id.worker_experience_editText)
+        spnNationality = findViewById(R.id.main_nationality_spinner)
+        spnSector = findViewById(R.id.worker_sector_spinner)
+        radStudent = findViewById(R.id.main_occupation_student)
+        radWorker = findViewById(R.id.main_occupation_worker)
     }
 
-    private fun createPerson(){
-        val name = txtName.text.toString()
+    private fun createPerson() {
+        val name = txtLastName.text.toString()
         val firstName = txtFirstName.text.toString()
         val nationality = spnNationality.selectedItem.toString()
         val email = txtEmail.text.toString()
@@ -138,8 +158,8 @@ class MainActivity : AppCompatActivity() {
                 }
                 1 -> { // worker
                     val company = txtCompany.text.toString()
-                    val department = spnDepartment.selectedItem.toString()
-                    val seniority = txtSeniority.text.toString().toInt()
+                    val department = spnSector.selectedItem.toString()
+                    val seniority = txtExperience.text.toString().toInt()
                     person = Worker(
                         name,
                         firstName,
@@ -158,17 +178,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun reset(){
-        txtName.text.clear()
+    private fun reset() {
+        txtLastName.text.clear()
         txtFirstName.text.clear()
         txtEmail.text.clear()
         txtRemark.text.clear()
         txtSchool.text.clear()
         txtGraduationYear.text.clear()
         txtCompany.text.clear()
-        txtSeniority.text.clear()
+        txtExperience.text.clear()
         spnNationality.setSelection(0)
-        spnDepartment.setSelection(0)
+        spnSector.setSelection(0)
         radStudent.isChecked = false
         radWorker.isChecked = false
     }
