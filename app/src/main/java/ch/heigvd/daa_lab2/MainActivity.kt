@@ -70,11 +70,11 @@ class MainActivity : AppCompatActivity() {
         val calendarConstraints = CalendarConstraints.Builder()
             .setOpenAt(selectedDateInMilli)
 
-        val datePickerBuilder = MaterialDatePicker.Builder.datePicker()
-        datePickerBuilder.setCalendarConstraints(calendarConstraints.build())
-        datePickerBuilder.setSelection(selectedDateInMilli)
+        val datePicker = MaterialDatePicker.Builder.datePicker()
+            .setCalendarConstraints(calendarConstraints.build())
+            .setSelection(selectedDateInMilli)
+            .build()
 
-        val datePicker = datePickerBuilder.build()
         datePicker.show(supportFragmentManager, null)
 
         datePicker.addOnPositiveButtonClickListener {
