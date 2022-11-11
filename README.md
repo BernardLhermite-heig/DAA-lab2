@@ -15,6 +15,12 @@ activité proposant un formulaire permettant d’éditer les informations d’un
 
 **Pour le champ remark, destiné à accueillir un texte pouvant être plus long qu’une seule ligne, quelle configuration particulière faut-il faire dans le fichier XML pour que son comportement soit correct ? Nous pensons notamment à la possibilité de faire des retours à la ligne, d’activer le correcteur orthographique et de permettre au champ de prendre la taille nécessaire.**
 
+Il faut mettre 
+```xml
+android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
+```
+afin de permettre le retour à la ligne et d'activer le correcteur orthographique.
+
 ### 1.2
 
 **Pour afficher la date sélectionnée via le DatePicker nous pouvons utiliser un DateFormat permettant par exemple d’afficher 12 juin 1996 à partir d’une instance de Date. Le formatage des dates peut être relativement différent en fonction des langues, la traduction des mois par exemple, mais également des habitudes régionales différentes : la même date en anglais britannique serait 12th June 1996 et en anglais américain June 12, 1996. Comment peut-on gérer cela au mieux ?**
@@ -30,5 +36,7 @@ activité proposant un formulaire permettant d’éditer les informations d’un
 ## 1.5
 
 **Pour les deux Spinners (nationalité et secteur d’activité), comment peut-on faire en sorte que le premier choix corresponde au choix null, affichant par exemple « Sélectionner » ? Comment peut-on gérer cette valeur pour ne pas qu’elle soit confondue avec une réponse ?**
+
+Il faut ajouter une valeur et la mettre en permier dans le spinner. Ensuite, on met une taille de 0 pour cette première valeur que l'utilisateur ne pense pas pouvoir la sélectionner.
 
 https://stackoverflow.com/questions/4726490/how-to-set-spinner-default-value-to-null

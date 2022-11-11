@@ -12,14 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        app:constraint_referenced_tags="main"
+        app:constraint_referenced_ids="main_base_title,main_lastName_title,main_lastName_editText,main_firstName_title,main_firstName_editText,main_birthDate_title,main_birthDate_editText,main_birthDate_button,main_nationality_title,main_nationality_spinner,main_occupation_title,main_occupation_radioGroup"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/main_base_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
         android:text="@string/main_base_title"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +38,6 @@
         android:id="@+id/main_lastName_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
         android:text="@string/main_base_name_title"
         app:layout_constraintBaseline_toBaselineOf="@id/main_lastName_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -51,7 +49,6 @@
         android:autofillHints="name"
         android:hint="@string/main_base_name_title"
         android:inputType="textPersonName"
-        android:tag="main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/main_base_title" />
@@ -60,7 +57,6 @@
         android:id="@+id/main_firstName_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
         android:text="@string/main_base_firstname_title"
         app:layout_constraintBaseline_toBaselineOf="@id/main_firstName_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -72,7 +68,6 @@
         android:autofillHints="name"
         android:hint="@string/main_base_firstname_title"
         android:inputType="textPersonName"
-        android:tag="main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/main_lastName_editText" />
@@ -81,7 +76,6 @@
         android:id="@+id/main_birthDate_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
         android:text="@string/main_base_birthdate_title"
         app:layout_constraintBaseline_toBaselineOf="@id/main_birthDate_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -103,7 +97,6 @@
         android:layout_height="wrap_content"
         android:contentDescription="@string/main_base_birthdate_title"
         android:src="@drawable/cake"
-        android:tag="main"
         app:layout_constraintBottom_toBottomOf="@id/main_birthDate_editText"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -111,7 +104,6 @@
         android:id="@+id/main_nationality_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="main"
         android:text="@string/main_base_nationality_title"
         app:layout_constraintBottom_toBottomOf="@id/main_nationality_spinner"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,7 +114,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="main"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/main_birthDate_editText" />
@@ -132,7 +123,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="main"
         android:text="@string/main_base_occupation_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_nationality_title" />
@@ -142,7 +132,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:tag="main"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/main_occupation_title">
 
@@ -150,14 +139,12 @@
             android:id="@+id/main_occupation_student"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="main"
             android:text="@string/main_base_occupation_student" />
 
         <RadioButton
             android:id="@+id/main_occupation_worker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:tag="main"
             android:text="@string/main_base_occupation_worker" />
     </RadioGroup>
 
@@ -166,14 +153,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        app:constraint_referenced_tags="student"
+        app:constraint_referenced_ids="student_details_title,student_school_name_title,student_school_name_editText,student_diploma_year_title,student_diploma_year_editText"
         app:layout_constraintTop_toBottomOf="@id/main_occupation_radioGroup" />
 
     <TextView
         android:id="@+id/student_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="student"
         android:text="@string/main_specific_students_title"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -183,7 +169,6 @@
         android:id="@+id/student_school_name_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="student"
         android:text="@string/main_specific_school_title"
         app:layout_constraintBaseline_toBaselineOf="@id/student_school_name_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -195,7 +180,6 @@
         android:autofillHints="schoolName"
         android:hint="@string/main_specific_school_title"
         android:inputType="textNoSuggestions"
-        android:tag="student"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/student_details_title" />
@@ -204,7 +188,6 @@
         android:id="@+id/student_diploma_year_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="student"
         android:text="@string/main_specific_graduationyear_title"
         app:layout_constraintBaseline_toBaselineOf="@id/student_diploma_year_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -216,7 +199,6 @@
         android:autofillHints="diplomaYear"
         android:hint="@string/main_specific_graduationyear_title"
         android:inputType="number"
-        android:tag="student"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/student_school_name_editText" />
@@ -224,16 +206,15 @@
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group_worker"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_tags="worker"
+        app:constraint_referenced_ids="worker_details_title,worker_company_title,worker_company_editText,worker_sector_title,worker_sector_spinner,worker_experience_title,worker_experience_editText"
         app:layout_constraintTop_toBottomOf="@id/student_diploma_year_editText" />
 
     <TextView
         android:id="@+id/worker_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="worker"
         android:text="@string/main_specific_workers_title"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -243,7 +224,6 @@
         android:id="@+id/worker_company_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="worker"
         android:text="@string/main_specific_compagny_title"
         app:layout_constraintBaseline_toBaselineOf="@id/worker_company_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -255,7 +235,6 @@
         android:autofillHints="companyName"
         android:hint="@string/main_specific_compagny_title"
         android:inputType="textNoSuggestions"
-        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_details_title" />
@@ -264,7 +243,6 @@
         android:id="@+id/worker_sector_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="worker"
         android:text="@string/main_specific_sector_title"
         app:layout_constraintBottom_toBottomOf="@id/worker_sector_spinner"
         app:layout_constraintStart_toStartOf="parent"
@@ -275,7 +253,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_company_editText" />
@@ -284,7 +261,6 @@
         android:id="@+id/worker_experience_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="worker"
         android:text="@string/main_specific_experience_title"
         app:layout_constraintBaseline_toBaselineOf="@id/worker_experience_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -296,7 +272,6 @@
         android:autofillHints="experience"
         android:hint="@string/main_specific_experience_title"
         android:inputType="number"
-        android:tag="worker"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/worker_sector_spinner" />
@@ -306,14 +281,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="visible"
-        app:constraint_referenced_tags="additional"
+        app:constraint_referenced_ids="additional_title,additional_email_title,additional_email_editText,additional_remarks_title,additional_remarks_editText,cancel_button,ok_button"
         app:layout_constraintTop_toBottomOf="@id/worker_experience_editText" />
 
     <TextView
         android:id="@+id/additional_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="additional"
         android:text="@string/additional_title"
         android:textAllCaps="true"
         app:layout_constraintStart_toStartOf="parent"
@@ -323,7 +297,6 @@
         android:id="@+id/additional_email_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="additional"
         android:text="@string/additional_email_title"
         app:layout_constraintBaseline_toBaselineOf="@id/additional_email_editText"
         app:layout_constraintStart_toStartOf="parent" />
@@ -335,7 +308,6 @@
         android:autofillHints="emailAddress"
         android:hint="@string/additional_email_title"
         android:inputType="textEmailAddress"
-        android:tag="additional"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/main_barrier"
         app:layout_constraintTop_toBottomOf="@id/additional_title" />
@@ -344,7 +316,6 @@
         android:id="@+id/additional_remarks_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:tag="additional"
         android:text="@string/additional_remarks_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/additional_email_editText" />
@@ -354,8 +325,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints="remarks"
-        android:inputType="textMultiLine"
-        android:tag="additional"
+        android:inputType="text|textMultiLine|textCapSentences|textAutoCorrect"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/additional_remarks_title" />
@@ -365,7 +335,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="additional"
         android:text="@string/btn_cancel"
         app:layout_constraintEnd_toStartOf="@id/ok_button"
         app:layout_constraintStart_toStartOf="parent"
@@ -376,7 +345,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:tag="additional"
         android:text="@string/btn_ok"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/cancel_button"
