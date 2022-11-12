@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.Group
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.time.Instant
@@ -14,7 +15,6 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    private var type = -1
     private lateinit var btnSubmit: Button
     private lateinit var btnDatePicker: ImageButton
     private lateinit var btnReset: Button
@@ -31,14 +31,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var spnSector: Spinner
     private lateinit var radStudent: RadioButton
     private lateinit var radWorker: RadioButton
+    private lateinit var workerGroup: Group
+    private lateinit var studentGroup: Group
+    private lateinit var radGroup: RadioGroup
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
 
-        txtDate.setOnClickListener {
-            showDatePicker()
+        txtDate.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                showDatePicker()
+            }
         }
         txtDate.keyListener = null
 
@@ -53,26 +58,36 @@ class MainActivity : AppCompatActivity() {
         btnReset.setOnClickListener {
             reset()
         }
+
+        radGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.main_occupation_student -> {
+                    workerGroup.visibility = View.GONE
+                    studentGroup.visibility = View.VISIBLE
+                }
+                R.id.main_occupation_worker -> {
+                    workerGroup.visibility = View.VISIBLE
+                    studentGroup.visibility = View.GONE
+                }
+            }
+        }
     }
 
     private fun showDatePicker() {
         val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
 
-        val selectedDate = if (txtDate.text.isNotEmpty()) {
-            LocalDate.parse(txtDate.text.toString(), formatter)
-        } else {
-            LocalDate.now()
+        val selectedDate = Calendar.getInstance()
+        if (txtDate.text.isNotEmpty()) {
+            val date = LocalDate.parse(txtDate.text, formatter)
+            selectedDate.set(date.year, date.monthValue - 1, date.dayOfMonth)
         }
 
-        val selectedDateInMilli =
-            selectedDate.atStartOfDay(ZoneOffset.UTC).toInstant().toEpochMilli()
-
         val calendarConstraints = CalendarConstraints.Builder()
-            .setOpenAt(selectedDateInMilli)
+            .setOpenAt(selectedDate.timeInMillis)
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setCalendarConstraints(calendarConstraints.build())
-            .setSelection(selectedDateInMilli)
+            .setSelection(selectedDate.timeInMillis)
             .build()
 
         datePicker.show(supportFragmentManager, null)
@@ -83,30 +98,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun onRadioButtonClicked(view: View) {
-        if (view is RadioButton) {
-            // Is the button now checked?
-            val checked = view.isChecked
-
-            // Check which radio button was clicked
-            when (view) {
-                radStudent ->
-                    if (checked) {
-                        type = 0
-                    }
-                radWorker ->
-                    if (checked) {
-                        type = 1
-                    }
-            }
-        }
-    }
-
     private fun toCalendar(dateStr: String): Calendar {
-        val date = Date(dateStr)
-        val cal = Calendar.getInstance()
-        cal.time = date
-        return cal
+        val date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        return Calendar.getInstance().apply {
+            set(date.year, date.monthValue - 1, date.dayOfMonth)
+        }
     }
 
     private fun init() {
@@ -126,6 +122,9 @@ class MainActivity : AppCompatActivity() {
         spnSector = findViewById(R.id.worker_sector_spinner)
         radStudent = findViewById(R.id.main_occupation_student)
         radWorker = findViewById(R.id.main_occupation_worker)
+        radGroup = findViewById(R.id.main_occupation_radioGroup)
+        studentGroup = findViewById(R.id.group_student)
+        workerGroup = findViewById(R.id.group_worker)
     }
 
     private fun createPerson() {
@@ -138,43 +137,44 @@ class MainActivity : AppCompatActivity() {
 
         if (name.isEmpty() || firstName.isEmpty() || birthDay.isEmpty() || nationality == "Sélectionner") {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
-        } else {
-            val person: Person
-            when (type) {
-                0 -> { // student
-                    val school = txtSchool.text.toString()
-                    val graduateYear = txtGraduationYear.text.toString().toInt()
-                    person = Student(
-                        name,
-                        firstName,
-                        toCalendar(birthDay),
-                        nationality,
-                        school,
-                        graduateYear,
-                        email,
-                        remark
-                    )
-                    println(person)
-                }
-                1 -> { // worker
-                    val company = txtCompany.text.toString()
-                    val department = spnSector.selectedItem.toString()
-                    val seniority = txtExperience.text.toString().toInt()
-                    person = Worker(
-                        name,
-                        firstName,
-                        toCalendar(birthDay),
-                        nationality,
-                        company,
-                        department,
-                        seniority,
-                        email,
-                        remark
-                    )
-                    println(person)
-                }
-                else -> Toast.makeText(this, "Please select a type", Toast.LENGTH_SHORT).show()
+            return
+        }
+        
+        val person: Person
+        when (radGroup.checkedRadioButtonId) {
+            R.id.main_occupation_student -> { // student
+                val school = txtSchool.text.toString()
+                val graduateYear = txtGraduationYear.text.toString().toInt()
+                person = Student(
+                    name,
+                    firstName,
+                    toCalendar(birthDay),
+                    nationality,
+                    school,
+                    graduateYear,
+                    email,
+                    remark
+                )
+                println(person)
             }
+            R.id.main_occupation_worker -> { // worker
+                val company = txtCompany.text.toString()
+                val department = spnSector.selectedItem.toString()
+                val seniority = txtExperience.text.toString().toInt()
+                person = Worker(
+                    name,
+                    firstName,
+                    toCalendar(birthDay),
+                    nationality,
+                    company,
+                    department,
+                    seniority,
+                    email,
+                    remark
+                )
+                println(person)
+            }
+            else -> Toast.makeText(this, "Please select a type", Toast.LENGTH_SHORT).show()
         }
     }
 
