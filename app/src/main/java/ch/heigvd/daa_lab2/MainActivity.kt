@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var btnSubmit: Button
     private lateinit var btnDatePicker: ImageButton
     private lateinit var btnReset: Button
-    private lateinit var txtDate: EditText
+    private lateinit var txtBirthday: EditText
     private lateinit var txtLastName: EditText
     private lateinit var txtFirstName: EditText
     private lateinit var txtEmail: EditText
@@ -35,37 +35,64 @@ class MainActivity : AppCompatActivity() {
     private lateinit var studentGroup: Group
     private lateinit var radGroup: RadioGroup
 
+    private var selectedSector: String? = null
+    private var selectedNationality: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         init()
 
-        val nationalities = resources.getStringArray(R.array.nationalities).toList()
-        val sectors = resources.getStringArray(R.array.sectors).toList()
+        val nationalityAdapter = ArrayAdapterWithDefaultValue(
+            this,
+            android.R.layout.simple_list_item_1,
+            resources.getStringArray(R.array.nationalities).toList(),
+            resources.getString(R.string.nationality_empty)
+        )
+        spnNationality.adapter = nationalityAdapter
+        spnNationality.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedNationality = nationalityAdapter.getItem(position)
+            }
 
-        spnNationality.adapter =
-            ArrayAdapterWithDefaultValue(
-                this,
-                android.R.layout.simple_list_item_1,
-                nationalities,
-                resources.getString(R.string.nationality_empty)
-            )
-        spnSector.adapter =
-            ArrayAdapterWithDefaultValue(
-                this,
-                android.R.layout.simple_list_item_1,
-                sectors,
-                resources.getString(R.string.sectors_empty)
-            )
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedNationality = null
+            }
+        }
 
-        spnNationality.setSelection(-1)
+        val sectorAdapter = ArrayAdapterWithDefaultValue(
+            this,
+            android.R.layout.simple_list_item_1,
+            resources.getStringArray(R.array.sectors).toList(),
+            resources.getString(R.string.sectors_empty)
+        )
+        spnSector.adapter = sectorAdapter
+        spnSector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                selectedSector = sectorAdapter.getItem(position)
+            }
 
-        txtDate.setOnFocusChangeListener { _, hasFocus ->
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                selectedSector = null
+            }
+        }
+
+        txtBirthday.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 showDatePicker()
             }
         }
-        txtDate.keyListener = null
+        txtBirthday.keyListener = null
 
         btnDatePicker.setOnClickListener {
             showDatePicker()
@@ -89,6 +116,10 @@ class MainActivity : AppCompatActivity() {
                     workerGroup.visibility = View.VISIBLE
                     studentGroup.visibility = View.GONE
                 }
+                else -> {
+                    workerGroup.visibility = View.VISIBLE
+                    studentGroup.visibility = View.VISIBLE
+                }
             }
         }
     }
@@ -97,8 +128,8 @@ class MainActivity : AppCompatActivity() {
         val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
 
         val selectedDate = Calendar.getInstance()
-        if (txtDate.text.isNotEmpty()) {
-            val date = LocalDate.parse(txtDate.text, formatter)
+        if (txtBirthday.text.isNotEmpty()) {
+            val date = LocalDate.parse(txtBirthday.text, formatter)
             selectedDate.set(date.year, date.monthValue - 1, date.dayOfMonth)
         }
 
@@ -114,7 +145,7 @@ class MainActivity : AppCompatActivity() {
 
         datePicker.addOnPositiveButtonClickListener {
             val date = LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
-            txtDate.setText(date.format(formatter))
+            txtBirthday.setText(date.format(formatter))
         }
     }
 
@@ -129,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         btnSubmit = findViewById(R.id.ok_button)
         btnDatePicker = findViewById(R.id.main_birthDate_button)
         btnReset = findViewById(R.id.cancel_button)
-        txtDate = findViewById(R.id.main_birthDate_editText)
+        txtBirthday = findViewById(R.id.main_birthDate_editText)
         txtLastName = findViewById(R.id.main_lastName_editText)
         txtFirstName = findViewById(R.id.main_firstName_editText)
         txtEmail = findViewById(R.id.additional_email_editText)
@@ -150,13 +181,12 @@ class MainActivity : AppCompatActivity() {
     private fun createPerson() {
         val name = txtLastName.text.toString()
         val firstName = txtFirstName.text.toString()
-        val nationality = spnNationality.selectedItem.toString()
+        val birthday = txtBirthday.text.toString()
         val email = txtEmail.text.toString()
-        val remark = txtRemark.text.toString()
-        val birthDay = txtDate.text.toString()
+        val remarks = txtRemark.text.toString()
 
-        if (name.isEmpty() || firstName.isEmpty() || birthDay.isEmpty() || nationality == "Sélectionner") {
-            Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
+        if (name.isEmpty() || firstName.isEmpty() || birthday.isEmpty() || selectedNationality == null || email.isEmpty()) {
+            showError(resources.getString(R.string.error_missing_fields))
             return
         }
 
@@ -164,36 +194,51 @@ class MainActivity : AppCompatActivity() {
         when (radGroup.checkedRadioButtonId) {
             R.id.main_occupation_student -> { // student
                 val school = txtSchool.text.toString()
-                val graduateYear = txtGraduationYear.text.toString().toInt()
+                val graduateYear = txtGraduationYear.text.toString().toIntOrNull()
+
+                if (school.isEmpty() || graduateYear == null || graduateYear <= 0) {
+                    val error = resources.getString(R.string.error_missing_occupation_fields)
+                    val section = resources.getString(R.string.main_specific_students_title)
+                    showError(error.format(section))
+                    return
+                }
+
                 person = Student(
                     name,
                     firstName,
-                    toCalendar(birthDay),
-                    nationality,
+                    toCalendar(birthday),
+                    selectedNationality!!,
                     school,
                     graduateYear,
                     email,
-                    remark
+                    remarks
                 )
             }
             R.id.main_occupation_worker -> { // worker
                 val company = txtCompany.text.toString()
-                val department = spnSector.selectedItem.toString()
-                val seniority = txtExperience.text.toString().toInt()
+                val seniority = txtExperience.text.toString().toIntOrNull()
+
+                if (company.isEmpty() || seniority == null || seniority < 0 || selectedSector == null) {
+                    val error = resources.getString(R.string.error_missing_occupation_fields)
+                    val section = resources.getString(R.string.main_specific_workers_title)
+                    showError(error.format(section))
+                    return
+                }
+
                 person = Worker(
                     name,
                     firstName,
-                    toCalendar(birthDay),
-                    nationality,
+                    toCalendar(birthday),
+                    selectedNationality!!,
                     company,
-                    department,
+                    selectedSector!!,
                     seniority,
                     email,
-                    remark
+                    remarks
                 )
             }
             else -> {
-                Toast.makeText(this, "Please select a type", Toast.LENGTH_SHORT).show()
+                showError(resources.getString(R.string.error_undefined_occupation))
                 return
             }
         }
@@ -211,7 +256,10 @@ class MainActivity : AppCompatActivity() {
         txtExperience.text.clear()
         spnNationality.setSelection(0)
         spnSector.setSelection(0)
-        radStudent.isChecked = false
-        radWorker.isChecked = false
+        radGroup.clearCheck()
+    }
+
+    private fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }

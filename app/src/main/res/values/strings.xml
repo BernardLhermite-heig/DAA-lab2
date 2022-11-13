@@ -12,7 +12,7 @@
     <string name="main_base_occupation_student">Etudiant</string>
     <string name="main_base_occupation_worker">Employé</string>
 
-    <string-array translatable="false" name="nationalities">
+    <string-array name="nationalities" translatable="false">
         <item>@string/ch</item>
         <item>@string/fr</item>
         <item>@string/de</item>
@@ -74,10 +74,14 @@
 
     <string name="additional_title">Données complémentaires</string>
     <string name="additional_email_title">Adresse e-mail</string>
-	
+
     <string name="additional_remarks_title">Commentaires</string>
 
     <string name="btn_cancel">@android:string/cancel</string>
     <string name="btn_ok">@android:string/ok</string>
+
+    <string name="error_missing_fields">Veuillez remplir tous les champs</string>
+    <string name="error_undefined_occupation">Veuillez sélectionner une occupation</string>
+    <string name="error_missing_occupation_fields">Veuillez remplir tous les champs de %1$s</string>
 
 </resources>
