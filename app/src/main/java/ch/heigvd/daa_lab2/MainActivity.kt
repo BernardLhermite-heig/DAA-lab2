@@ -40,6 +40,26 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         init()
 
+        val nationalities = resources.getStringArray(R.array.nationalities).toList()
+        val sectors = resources.getStringArray(R.array.sectors).toList()
+
+        spnNationality.adapter =
+            ArrayAdapterWithDefaultValue(
+                this,
+                android.R.layout.simple_list_item_1,
+                nationalities,
+                resources.getString(R.string.nationality_empty)
+            )
+        spnSector.adapter =
+            ArrayAdapterWithDefaultValue(
+                this,
+                android.R.layout.simple_list_item_1,
+                sectors,
+                resources.getString(R.string.sectors_empty)
+            )
+
+        spnNationality.setSelection(-1)
+
         txtDate.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 showDatePicker()
@@ -56,7 +76,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         btnReset.setOnClickListener {
-            reset()
+            resetFields()
         }
 
         radGroup.setOnCheckedChangeListener { _, checkedId ->
@@ -139,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Please fill all the fields", Toast.LENGTH_SHORT).show()
             return
         }
-        
+
         val person: Person
         when (radGroup.checkedRadioButtonId) {
             R.id.main_occupation_student -> { // student
@@ -155,7 +175,6 @@ class MainActivity : AppCompatActivity() {
                     email,
                     remark
                 )
-                println(person)
             }
             R.id.main_occupation_worker -> { // worker
                 val company = txtCompany.text.toString()
@@ -172,13 +191,16 @@ class MainActivity : AppCompatActivity() {
                     email,
                     remark
                 )
-                println(person)
             }
-            else -> Toast.makeText(this, "Please select a type", Toast.LENGTH_SHORT).show()
+            else -> {
+                Toast.makeText(this, "Please select a type", Toast.LENGTH_SHORT).show()
+                return
+            }
         }
+        println(person)
     }
 
-    private fun reset() {
+    private fun resetFields() {
         txtLastName.text.clear()
         txtFirstName.text.clear()
         txtEmail.text.clear()
