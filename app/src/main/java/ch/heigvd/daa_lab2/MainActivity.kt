@@ -192,7 +192,7 @@ class MainActivity : AppCompatActivity() {
 
         val person: Person
         when (radGroup.checkedRadioButtonId) {
-            R.id.main_occupation_student -> { // student
+            R.id.main_occupation_student -> {
                 val school = txtSchool.text.toString()
                 val graduateYear = txtGraduationYear.text.toString().toIntOrNull()
 
@@ -214,7 +214,7 @@ class MainActivity : AppCompatActivity() {
                     remarks
                 )
             }
-            R.id.main_occupation_worker -> { // worker
+            R.id.main_occupation_worker -> {
                 val company = txtCompany.text.toString()
                 val seniority = txtExperience.text.toString().toIntOrNull()
 
