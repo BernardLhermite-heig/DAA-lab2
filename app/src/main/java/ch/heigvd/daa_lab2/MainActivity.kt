@@ -12,6 +12,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private var selectedNationality: String? = null
 
     companion object {
-        private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+        private val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
