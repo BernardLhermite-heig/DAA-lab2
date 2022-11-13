@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var txtFirstName: EditText
     private lateinit var txtEmail: EditText
     private lateinit var txtRemark: EditText
-    private lateinit var txtSchool: EditText
+    private lateinit var txtUniversity: EditText
     private lateinit var txtGraduationYear: EditText
     private lateinit var txtCompany: EditText
-    private lateinit var txtExperience: EditText
+    private lateinit var txtExperienceYear: EditText
     private lateinit var spnNationality: Spinner
     private lateinit var spnSector: Spinner
     private lateinit var radStudent: RadioButton
@@ -34,6 +34,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var workerGroup: Group
     private lateinit var studentGroup: Group
     private lateinit var radGroup: RadioGroup
+    private lateinit var nationalityAdapter: ArrayAdapterWithDefaultValue<String?>
+    private lateinit var sectorAdapter: ArrayAdapterWithDefaultValue<String?>
 
     private var selectedSector: String? = null
     private var selectedNationality: String? = null
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         init()
 
-        val nationalityAdapter = ArrayAdapterWithDefaultValue(
+        nationalityAdapter = ArrayAdapterWithDefaultValue(
             this,
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.nationalities).toList(),
@@ -65,7 +67,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        val sectorAdapter = ArrayAdapterWithDefaultValue(
+        sectorAdapter = ArrayAdapterWithDefaultValue(
             this,
             android.R.layout.simple_list_item_1,
             resources.getStringArray(R.array.sectors).toList(),
@@ -165,10 +167,10 @@ class MainActivity : AppCompatActivity() {
         txtFirstName = findViewById(R.id.main_firstName_editText)
         txtEmail = findViewById(R.id.additional_email_editText)
         txtRemark = findViewById(R.id.additional_remarks_editText)
-        txtSchool = findViewById(R.id.student_school_name_editText)
+        txtUniversity = findViewById(R.id.student_school_name_editText)
         txtGraduationYear = findViewById(R.id.student_diploma_year_editText)
         txtCompany = findViewById(R.id.worker_company_editText)
-        txtExperience = findViewById(R.id.worker_experience_editText)
+        txtExperienceYear = findViewById(R.id.worker_experience_editText)
         spnNationality = findViewById(R.id.main_nationality_spinner)
         spnSector = findViewById(R.id.worker_sector_spinner)
         radStudent = findViewById(R.id.main_occupation_student)
@@ -193,7 +195,7 @@ class MainActivity : AppCompatActivity() {
         val person: Person
         when (radGroup.checkedRadioButtonId) {
             R.id.main_occupation_student -> {
-                val school = txtSchool.text.toString()
+                val school = txtUniversity.text.toString()
                 val graduateYear = txtGraduationYear.text.toString().toIntOrNull()
 
                 if (school.isEmpty() || graduateYear == null || graduateYear <= 0) {
@@ -216,7 +218,7 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.main_occupation_worker -> {
                 val company = txtCompany.text.toString()
-                val seniority = txtExperience.text.toString().toIntOrNull()
+                val seniority = txtExperienceYear.text.toString().toIntOrNull()
 
                 if (company.isEmpty() || seniority == null || seniority < 0 || selectedSector == null) {
                     val error = resources.getString(R.string.error_missing_occupation_fields)
@@ -250,10 +252,10 @@ class MainActivity : AppCompatActivity() {
         txtFirstName.text.clear()
         txtEmail.text.clear()
         txtRemark.text.clear()
-        txtSchool.text.clear()
+        txtUniversity.text.clear()
         txtGraduationYear.text.clear()
         txtCompany.text.clear()
-        txtExperience.text.clear()
+        txtExperienceYear.text.clear()
         spnNationality.setSelection(0)
         spnSector.setSelection(0)
         radGroup.clearCheck()
@@ -261,5 +263,32 @@ class MainActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun loadPerson(person: Person) {
+        txtLastName.setText(person.name)
+        txtFirstName.setText(person.firstName)
+
+        val formattedDate = Person.dateFormatter.format(person.birthDay.time)
+        txtBirthday.setText(formattedDate)
+
+        spnNationality.setSelection(nationalityAdapter.getPosition(person.nationality))
+
+        txtEmail.setText(person.email)
+        txtRemark.setText(person.remark)
+
+        when (person) {
+            is Student -> {
+                radStudent.isChecked = true
+                txtUniversity.setText(person.university)
+                txtGraduationYear.setText(person.graduationYear.toString())
+            }
+            is Worker -> {
+                radWorker.isChecked = true
+                txtCompany.setText(person.company)
+                spnSector.setSelection(sectorAdapter.getPosition(person.sector))
+                txtExperienceYear.setText(person.experienceYear.toString())
+            }
+        }
     }
 }
