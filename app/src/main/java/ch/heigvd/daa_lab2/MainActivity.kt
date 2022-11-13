@@ -1,6 +1,7 @@
 package ch.heigvd.daa_lab2
 
 import android.os.Bundle
+import android.util.Patterns
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,11 @@ import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
 
+/**
+ * Activité principale de l'application permettant de créer des personnes (étudiants ou employés).
+ * Une personne existente peut être chargée à l'aide de la méthode [loadPerson] après la création de l'activité.
+ * @author Marengo Stéphane, Friedli Jonathan, Silvestri Géraud
+ */
 class MainActivity : AppCompatActivity() {
     private lateinit var btnSubmit: Button
     private lateinit var btnDatePicker: ImageButton
@@ -195,16 +201,28 @@ class MainActivity : AppCompatActivity() {
             return
         }
 
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            showError(resources.getString(R.string.error_invalid_email))
+            return
+        }
+
         val person: Person
         when (radGroup.checkedRadioButtonId) {
             R.id.main_occupation_student -> {
                 val school = txtUniversity.text.toString()
                 val graduateYear = txtGraduationYear.text.toString().toIntOrNull()
 
-                if (school.isEmpty() || graduateYear == null || graduateYear <= 0) {
-                    val error = resources.getString(R.string.error_missing_occupation_fields)
-                    val section = resources.getString(R.string.main_specific_students_title)
-                    showError(error.format(section))
+                if (school.isEmpty() || graduateYear == null) {
+                    val errorMessage = resources.getString(R.string.error_missing_occupation_fields)
+                    val sectionName = resources.getString(R.string.main_specific_students_title)
+                    showError(errorMessage.format(sectionName))
+                    return
+                }
+
+                if (graduateYear <= 0) {
+                    val errorMessage = resources.getString(R.string.error_negative_or_zero_field)
+                    val fieldName = resources.getString(R.string.main_specific_graduationyear_title)
+                    showError(errorMessage.format(fieldName))
                     return
                 }
 
@@ -223,10 +241,17 @@ class MainActivity : AppCompatActivity() {
                 val company = txtCompany.text.toString()
                 val seniority = txtExperienceYear.text.toString().toIntOrNull()
 
-                if (company.isEmpty() || seniority == null || seniority < 0 || selectedSector == null) {
-                    val error = resources.getString(R.string.error_missing_occupation_fields)
-                    val section = resources.getString(R.string.main_specific_workers_title)
-                    showError(error.format(section))
+                if (company.isEmpty() || seniority == null || selectedSector == null) {
+                    val errorMessage = resources.getString(R.string.error_missing_occupation_fields)
+                    val sectionName = resources.getString(R.string.main_specific_workers_title)
+                    showError(errorMessage.format(sectionName))
+                    return
+                }
+
+                if (seniority < 0) {
+                    val errorMessage = resources.getString(R.string.error_negative_field)
+                    val fieldName = resources.getString(R.string.main_specific_experience_title)
+                    showError(errorMessage.format(fieldName))
                     return
                 }
 
