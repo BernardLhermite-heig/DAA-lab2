@@ -10,12 +10,14 @@ import java.util.*
  *  Nous fournissons également deux exemples, un étudiant et une employée
  */
 
-abstract class Person(var name: String,
-                      var firstName: String,
-                      var birthDay : Calendar,
-                      var nationality: String,
-                      var email : String,
-                      var remark : String) {
+abstract class Person(
+    var name: String,
+    var firstName: String,
+    var birthDay: Calendar,
+    var nationality: String,
+    var email: String,
+    var remark: String
+) {
 
     protected fun superToString(): String {
         return "name: $name, firstName: $firstName, birthDay: ${dateFormatter.format(birthDay.time)}, nationality: $nationality, email: $email, remark: $remark"
@@ -47,7 +49,7 @@ abstract class Person(var name: String,
                 set(Calendar.MONTH, Calendar.APRIL)
                 set(Calendar.DAY_OF_MONTH, 8)
             },
-            "Allemand",
+            "Allemande",
             "HEIG-VD",
             2023,
             "m.dreher@email.com",
@@ -57,29 +59,33 @@ abstract class Person(var name: String,
 
 }
 
-class Student(name: String,
-              firstName: String,
-              birthDay : Calendar,
-              nationality: String,
-              var university : String,
-              var graduationYear : Int,
-              email : String,
-              remark: String) : Person(name, firstName, birthDay, nationality, email, remark) {
+class Student(
+    name: String,
+    firstName: String,
+    birthDay: Calendar,
+    nationality: String,
+    var university: String,
+    var graduationYear: Int,
+    email: String,
+    remark: String
+) : Person(name, firstName, birthDay, nationality, email, remark) {
 
     override fun toString(): String {
         return "Student - ${super.superToString()}, university: $university, graduationYear: $graduationYear"
     }
 }
 
-class Worker(name: String,
-             firstName: String,
-             birthDay : Calendar,
-             nationality: String,
-             var company : String,
-             var sector : String,
-             var experienceYear : Int,
-             email : String,
-             remark: String) : Person(name, firstName, birthDay, nationality, email, remark) {
+class Worker(
+    name: String,
+    firstName: String,
+    birthDay: Calendar,
+    nationality: String,
+    var company: String,
+    var sector: String,
+    var experienceYear: Int,
+    email: String,
+    remark: String
+) : Person(name, firstName, birthDay, nationality, email, remark) {
 
     override fun toString(): String {
         return "Worker - ${super.superToString()}, company: $company, sector: $sector, experienceYear: $experienceYear"
