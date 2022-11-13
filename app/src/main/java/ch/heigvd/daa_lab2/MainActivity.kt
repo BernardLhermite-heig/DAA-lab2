@@ -34,11 +34,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var workerGroup: Group
     private lateinit var studentGroup: Group
     private lateinit var radGroup: RadioGroup
+
     private lateinit var nationalityAdapter: ArrayAdapterWithDefaultValue<String?>
     private lateinit var sectorAdapter: ArrayAdapterWithDefaultValue<String?>
-
     private var selectedSector: String? = null
     private var selectedNationality: String? = null
+
+    companion object {
+        private val dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -124,14 +128,14 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        loadPerson(Person.exampleStudent)
     }
 
     private fun showDatePicker() {
-        val formatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
-
         val selectedDate = Calendar.getInstance()
         if (txtBirthday.text.isNotEmpty()) {
-            val date = LocalDate.parse(txtBirthday.text, formatter)
+            val date = LocalDate.parse(txtBirthday.text, dateFormatter)
             selectedDate.set(date.year, date.monthValue - 1, date.dayOfMonth)
         }
 
@@ -147,12 +151,12 @@ class MainActivity : AppCompatActivity() {
 
         datePicker.addOnPositiveButtonClickListener {
             val date = LocalDateTime.ofInstant(Instant.ofEpochMilli(it), ZoneOffset.UTC)
-            txtBirthday.setText(date.format(formatter))
+            txtBirthday.setText(date.format(dateFormatter))
         }
     }
 
     private fun toCalendar(dateStr: String): Calendar {
-        val date = LocalDate.parse(dateStr, DateTimeFormatter.ofPattern("dd MMM yyyy"))
+        val date = LocalDate.parse(dateStr, dateFormatter)
         return Calendar.getInstance().apply {
             set(date.year, date.monthValue - 1, date.dayOfMonth)
         }
@@ -272,7 +276,8 @@ class MainActivity : AppCompatActivity() {
         val formattedDate = Person.dateFormatter.format(person.birthDay.time)
         txtBirthday.setText(formattedDate)
 
-        spnNationality.setSelection(nationalityAdapter.getPosition(person.nationality))
+        val nationalityPosition = nationalityAdapter.getPosition(person.nationality)
+        spnNationality.setSelection(nationalityPosition)
 
         txtEmail.setText(person.email)
         txtRemark.setText(person.remark)
@@ -286,7 +291,10 @@ class MainActivity : AppCompatActivity() {
             is Worker -> {
                 radWorker.isChecked = true
                 txtCompany.setText(person.company)
-                spnSector.setSelection(sectorAdapter.getPosition(person.sector))
+
+                val sectorPosition = sectorAdapter.getPosition(person.sector)
+                spnSector.setSelection(sectorPosition)
+
                 txtExperienceYear.setText(person.experienceYear.toString())
             }
         }
