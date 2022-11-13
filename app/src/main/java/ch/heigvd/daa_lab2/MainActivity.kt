@@ -128,8 +128,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-
-        loadPerson(Person.exampleStudent)
     }
 
     private fun showDatePicker() {
@@ -269,7 +267,7 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
-    private fun loadPerson(person: Person) {
+    fun loadPerson(person: Person) {
         txtLastName.setText(person.name)
         txtFirstName.setText(person.firstName)
 
