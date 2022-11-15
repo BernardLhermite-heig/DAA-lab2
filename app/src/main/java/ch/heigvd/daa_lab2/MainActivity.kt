@@ -6,12 +6,8 @@ import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
-import com.google.android.material.datepicker.CalendarConstraints
-import com.google.android.material.datepicker.MaterialDatePicker
-import java.time.Instant
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.ZoneOffset
+import com.google.android.material.datepicker.*
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.util.*
@@ -144,8 +140,20 @@ class MainActivity : AppCompatActivity() {
             selectedDate.set(date.year, date.monthValue - 1, date.dayOfMonth)
         }
 
+        val minDateInMs =
+            OffsetDateTime.now(ZoneOffset.UTC).minusYears(110).toInstant().toEpochMilli()
+
+        val calendarValidators = CompositeDateValidator.allOf(
+            listOf(
+                DateValidatorPointBackward.now(),
+                DateValidatorPointForward.from(minDateInMs)
+            )
+        )
+
         val calendarConstraints = CalendarConstraints.Builder()
             .setOpenAt(selectedDate.timeInMillis)
+            .setEnd(MaterialDatePicker.thisMonthInUtcMilliseconds())
+            .setValidator(calendarValidators)
 
         val datePicker = MaterialDatePicker.Builder.datePicker()
             .setCalendarConstraints(calendarConstraints.build())
