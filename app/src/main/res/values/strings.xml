@@ -80,6 +80,8 @@
     <string name="btn_cancel">@android:string/cancel</string>
     <string name="btn_ok">@android:string/ok</string>
 
+    <string name="user_created">Utilisateur créé !</string>
+    
     <string name="error_missing_fields">Veuillez remplir tous les champs</string>
     <string name="error_undefined_occupation">Veuillez sélectionner une occupation</string>
     <string name="error_missing_occupation_fields">Veuillez remplir tous les champs de %1$s</string>

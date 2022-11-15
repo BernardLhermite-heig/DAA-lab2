@@ -285,6 +285,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         Log.println(Log.INFO, "Person", person.toString())
+        Toast.makeText(this, getString(R.string.user_created), Toast.LENGTH_LONG).show()
+        resetFields()
     }
 
     private fun resetFields() {
