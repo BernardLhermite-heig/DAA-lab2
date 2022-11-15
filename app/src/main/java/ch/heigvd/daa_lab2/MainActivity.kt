@@ -292,15 +292,19 @@ class MainActivity : AppCompatActivity() {
     private fun resetFields() {
         txtLastName.text.clear()
         txtFirstName.text.clear()
-        txtEmail.text.clear()
-        txtRemark.text.clear()
+        txtBirthday.text.clear()
+        spnNationality.setSelection(0)
+        radGroup.clearCheck()
+
         txtUniversity.text.clear()
         txtGraduationYear.text.clear()
+
         txtCompany.text.clear()
         txtExperienceYear.text.clear()
-        spnNationality.setSelection(0)
         spnSector.setSelection(0)
-        radGroup.clearCheck()
+        
+        txtEmail.text.clear()
+        txtRemark.text.clear()
     }
 
     private fun showError(message: String) {
