@@ -23,6 +23,8 @@ Finalement, nous avons un dernier groupe qui est tout le temps affiché: `group_
 
 Il est important de noter que les groupes `group_base` et `group_additional` ne sont pas utiles, mais nous les avons mis afin d'être cohérent.
 
+<div style="page-break-after: always;"></div>
+
 Voici le code qui permet de les masquer/afficher:
 
 ```kotlin
@@ -60,6 +62,7 @@ Nous avons mis tous nos layout dans une scrollview afin de voir toutes les infor
 
 </ScrollView>
 ```
+<div style="page-break-after: always;"></div>
 
 ### 1.3. Barrière
 
@@ -93,6 +96,8 @@ txtBirthday.setOnFocusChangeListener { _, hasFocus ->
 }
 txtBirthday.keyListener = null // Désactive le clavier
 ```
+
+<div style="page-break-after: always;"></div>
 
 ### 1.6. Bouton ok/cancel
 
@@ -223,6 +228,7 @@ Cette ligne permet de parser une date depuis une chaîne de caractères:
 val date = LocalDate.parse(txtBirthday.text, dateFormatter)
 ```
 
+<div style="page-break-after: always;"></div>
 
 ## 2.3
 
@@ -296,6 +302,8 @@ additional_remarks_editText.setOnEditorActionListener { _, actionId, _ ->
 }
 ```
 
+<div style="page-break-after: always;"></div>
+
 ## 2.5
 
 **Pour les deux Spinners (nationalité et secteur d’activité), comment peut-on faire en sorte que le premier choix corresponde au choix null, affichant par exemple « Sélectionner » ? Comment peut-on gérer cette valeur pour ne pas qu’elle soit confondue avec une réponse ?**
@@ -337,6 +345,8 @@ private fun getHintView(parent: ViewGroup): View {
     return view
 }
 ```
+
+<div style="page-break-after: always;"></div>
 
 Et voici comment nous l'utilisons dans le code:
 ```kotlin
