@@ -46,6 +46,8 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         private val dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
+        private const val DATEPICKER_RELATIVE_LOWER_YEAR =
+            110L // la borne inférieure du datepicker en années relatives à l'année en cours
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,7 +144,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         val minDateInMs =
-            OffsetDateTime.now(ZoneOffset.UTC).minusYears(110).toInstant().toEpochMilli()
+            OffsetDateTime.now(ZoneOffset.UTC).minusYears(DATEPICKER_RELATIVE_LOWER_YEAR)
+                .toInstant().toEpochMilli()
 
         val calendarValidators = CompositeDateValidator.allOf(
             listOf(
