@@ -10,7 +10,7 @@
 Le but de ce laboratoire est de réaliser une
 activité proposant un formulaire permettant d’éditer les informations d’une personne. Ledit formulaire est décomposé en plusieurs parties et devra s'adapter à la saisie d'un étudiant ou d'un travailleur en affichant uniquement les parties pertinentes.
 
-## 1. Détails d'implénentation
+## 1. Détails d'implémentation
 ### 1.1. Layout
 
 Nous avons réussi à faire toute notre interface graphique à l'aide d'un seul `constraint layout`. Nous avons regroupé les différents champs dans plusieurs groupes: `group_base` contient toutes les informations principales comme le nom, la date de naissance et les `radio button` permettant de choisir entre un étudiant et un employé. 
@@ -19,9 +19,9 @@ Le groupe `group_student` contient toutes les informations relatives à un étud
 
 Le groupe `group_worker` contient toutes les informations relatives à un employé comme son entreprise, son secteur et son expérience. Comme précédemment, ce groupe n'est visible que si le `radio button` "employé" est coché.
 
-Finalement nous avons un dernier groupe qui est tout le temps affiché: `group_additional` qui contient les informations supplémentaires comme l'adresse mail et un champ pour faire des commentaires.
+Finalement, nous avons un dernier groupe qui est tout le temps affiché: `group_additional` qui contient les informations supplémentaires comme l'adresse mail et un champ pour faire des commentaires.
 
-Il est important de noter que les groupes `group_base` et `group_additional` ne sont pas utiles mais nous les avons mis afin d'être cohérent.
+Il est important de noter que les groupes `group_base` et `group_additional` ne sont pas utiles, mais nous les avons mis afin d'être cohérent.
 
 Voici le code qui permet de les masquer/afficher:
 
@@ -45,7 +45,7 @@ radGroup.setOnCheckedChangeListener { _, checkedId ->
 ```
 
 ### 1.2. ScrollView
-Nous avons mis tout notre layout dans une scrollview afin de voir toutes les informations lorsque le clavier est ouvert.
+Nous avons mis tous nos layout dans une scrollview afin de voir toutes les informations lorsque le clavier est ouvert.
 
 ```xml
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -63,7 +63,7 @@ Nous avons mis tout notre layout dans une scrollview afin de voir toutes les inf
 
 ### 1.3. Barrière
 
-Nous avons utilisé une barrière afin de faire en sorte que toutes les `EditText` soit alignées. Pour ce faire, nous avons rajouter une balise `androidx.constraintlayout.widget.Barrier`
+Nous avons utilisé une barrière afin de faire en sorte que toutes les `EditText` soit alignées. Pour ce faire, nous avons rajouté une balise `androidx.constraintlayout.widget.Barrier`
 
 ```xml
 <androidx.constraintlayout.widget.Barrier
@@ -80,7 +80,7 @@ A l'intérieur de cette dernière, nous avons rajouté tous les id des `TextView
 
 ### 1.4. MaterialDatePicker
 
-Nous avons eu le choix entre utiliser `DatePickerDialog` et `MaterialDatePicker` afin de choisir une date. Nous avons choisi d'utiliser `MaterialDatePicker` car il est plus moderne. Pour le détails d'implémentations, voir la question 2.3.
+Nous avons eu le choix entre utiliser `DatePickerDialog` et `MaterialDatePicker` afin de choisir une date. Nous avons choisi d'utiliser `MaterialDatePicker`, car il est plus moderne. Pour le détails d'implémentations, voir la question 2.3.
 
 ### 1.5. Ouverture du DatePicker
 
@@ -113,7 +113,7 @@ La méthode `resetFields()` permet de clear tous les `EditText` et `RadioGroup` 
 
 ### 1.7. Création d'une personne
 
-Lors de la soumission du formulaire, nous vérifions en premier lieu que tous les champs en commun soient remplis, à l'exception du champ commentaire. Si ce n'est pas le cas, un message d'erreur s'affiche à l'aide d'un `Toast`. Nous vérifions ensuite que le champ email contienne bien un email valide grâce à une Regex fournie par Android.
+Lors de la soumission du formulaire, nous vérifions en premier lieu que tous les champs en commun sont remplis, à l'exception du champ commentaire. Si ce n'est pas le cas, un message d'erreur s'affiche à l'aide d'un `Toast`. Nous vérifions ensuite que le champ email contienne bien un email valide grâce à une Regex fournie par Android.
 
 ```kotlin
 if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -152,7 +152,7 @@ private fun showError(message: String) {
 
 ### 1.8. Charger une personne existante
 
-La méthode suivante, qui est publique, permet de load une personne existante et d'afficher ses informations dans le formulaire:
+La méthode suivante, qui est publique, permet de charger une personne existante et d'afficher ses informations dans le formulaire:
 
 ```kotlin
 fun loadPerson(person: Person) {
@@ -217,7 +217,7 @@ Voici la balise `EditText` dans laquelle on peut voir l'attribut `android:inputT
 
 Pour gérer cela au mieux, il est recommandé d'utiliser les classes `DateTimeFormatter` et `LocalDate`. Un formateur localisé peut être obtenu via la méthode `DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)` qui permet de prendre en compte le format actuel du système.
 
-Cette ligne permet de parser une date depuis une chaîne de caractère:
+Cette ligne permet de parser une date depuis une chaîne de caractères:
 ```kotlin
 // dateFormatter = DateTimeFormatter.ofLocalizedDate(FormatStyle.MEDIUM)
 val date = LocalDate.parse(txtBirthday.text, dateFormatter)
@@ -228,7 +228,7 @@ val date = LocalDate.parse(txtBirthday.text, dateFormatter)
 
 **Est-il possible de limiter les dates sélectionnables dans le dialogue, en particulier pour une date de naissance il est peu probable d’avoir une personne née il y a plus de 110 ans ou à une date dans le futur. Comment pouvons-nous mettre cela en place ?**
 
-Oui c'est possible. 
+Oui, c'est possible. 
 Voici l'implémentation de notre date picker:
 
 ```kotlin
@@ -273,7 +273,7 @@ private fun showDatePicker() {
 ```
 Comme indiqué dans la documentation du `DatePicker`, ce dernier ne travaille qu'en UTC. Ce qui nous force à spécifier la timezone à certaines lignes.
 
-Nous faisons deux `validators` qui permettent de limiter les dates sélectionnables dans le dialogue. Dans notre cas, les dates sont limitées dans l'intervalle [110ans en arrière, aujourd'hui].
+Nous faisons deux `validators` qui permettent de limiter les dates sélectionnables dans le dialogue. Dans notre cas, les dates sont limitées dans l'intervalle [110 ans en arrière, aujourd'hui].
 
 ## 2.4
 
@@ -300,7 +300,7 @@ additional_remarks_editText.setOnEditorActionListener { _, actionId, _ ->
 
 **Pour les deux Spinners (nationalité et secteur d’activité), comment peut-on faire en sorte que le premier choix corresponde au choix null, affichant par exemple « Sélectionner » ? Comment peut-on gérer cette valeur pour ne pas qu’elle soit confondue avec une réponse ?**
 
-Nous avons fait un adapteur personnalisé qui prend une chaîne de caractère en paramètre. Cette chaîne de caractère est utilisée comme affichage lorsque aucun élément n'est sélectionné.
+Nous avons fait un adapteur personnalisé qui prend une chaîne de caractères en paramètre. Cette chaîne de caractères est utilisée comme affichage lorsque aucun élément n'est sélectionné.
 
 Pour gérer l'affichage, nous avons réécrit les méthodes suivantes:
 
@@ -367,7 +367,7 @@ spnSector.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
 Pour ne pas confondre la première valeur avec une réponse, nous avons inséré `null` au début de la liste des valeurs.
 
-Ces deux lignes permettent de séléctionner le bon élément dans le spinner en fonction de la valeur:
+Ces deux lignes permettent de sélectionner le bon élément dans le spinner en fonction de la valeur:
 ```kotlin
 val nationalityPosition = nationalityAdapter.getPosition(person.nationality)
 spnNationality.setSelection(nationalityPosition)
