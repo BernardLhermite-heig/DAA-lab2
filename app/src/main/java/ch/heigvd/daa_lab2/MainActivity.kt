@@ -1,6 +1,7 @@
 package ch.heigvd.daa_lab2
 
 import android.os.Bundle
+import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.*
@@ -280,7 +281,7 @@ class MainActivity : AppCompatActivity() {
                 return
             }
         }
-        println(person)
+        Log.println(Log.INFO, "Person", person.toString())
     }
 
     private fun resetFields() {
