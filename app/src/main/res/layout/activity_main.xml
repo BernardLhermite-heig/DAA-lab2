@@ -9,7 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
+        android:padding="@dimen/layout_padding">
 
         <androidx.constraintlayout.widget.Group
             android:id="@+id/group_base"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:barrierDirection="end"
-            app:barrierMargin="30dp"
+            app:barrierMargin="@dimen/barrier_margin"
             app:constraint_referenced_ids="main_lastName_title,main_firstName_title,main_birthDate_title,
         main_nationality_title, main_occupation_title,student_school_name_title,
         student_diploma_year_title,worker_company_title,worker_experience_title,worker_sector_title" />
@@ -117,7 +117,7 @@
             android:id="@+id/main_nationality_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/main_barrier"
             app:layout_constraintTop_toBottomOf="@id/main_birthDate_editText" />
@@ -126,7 +126,7 @@
             android:id="@+id/main_occupation_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:text="@string/main_base_occupation_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/main_nationality_title" />
@@ -256,7 +256,7 @@
             android:id="@+id/worker_sector_spinner"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/main_barrier"
             app:layout_constraintTop_toBottomOf="@id/worker_company_editText" />
@@ -338,7 +338,7 @@
             android:id="@+id/cancel_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:text="@string/btn_cancel"
             app:layout_constraintEnd_toStartOf="@id/ok_button"
             app:layout_constraintStart_toStartOf="parent"
@@ -348,7 +348,7 @@
             android:id="@+id/ok_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/default_margin"
             android:text="@string/btn_ok"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cancel_button"
