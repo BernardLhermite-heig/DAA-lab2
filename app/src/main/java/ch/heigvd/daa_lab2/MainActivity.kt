@@ -134,6 +134,8 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
+        loadPerson(Person.exampleStudent)
     }
 
     private fun showDatePicker() {
@@ -302,7 +304,7 @@ class MainActivity : AppCompatActivity() {
         txtCompany.text.clear()
         txtExperienceYear.text.clear()
         spnSector.setSelection(0)
-        
+
         txtEmail.text.clear()
         txtRemark.text.clear()
     }
@@ -315,8 +317,13 @@ class MainActivity : AppCompatActivity() {
         txtLastName.setText(person.name)
         txtFirstName.setText(person.firstName)
 
-        val formattedDate = Person.dateFormatter.format(person.birthDay.time)
-        txtBirthday.setText(formattedDate)
+        val birthday = dateFormatter.format(
+            LocalDateTime.ofInstant(
+                person.birthDay.toInstant(),
+                ZoneId.systemDefault()
+            )
+        )
+        txtBirthday.setText(birthday)
 
         val nationalityPosition = nationalityAdapter.getPosition(person.nationality)
         spnNationality.setSelection(nationalityPosition)
