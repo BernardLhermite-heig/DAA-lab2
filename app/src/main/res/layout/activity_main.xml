@@ -156,7 +156,7 @@
             android:id="@+id/group_student"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="student_details_title,student_school_name_title,student_school_name_editText,student_diploma_year_title,student_diploma_year_editText"
             app:layout_constraintTop_toBottomOf="@id/main_occupation_radioGroup" />
 
@@ -211,7 +211,7 @@
             android:id="@+id/group_worker"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
+            android:visibility="gone"
             app:constraint_referenced_ids="worker_details_title,worker_company_title,worker_company_editText,worker_sector_title,worker_sector_spinner,worker_experience_title,worker_experience_editText"
             app:layout_constraintTop_toBottomOf="@id/student_diploma_year_editText" />
 

@@ -129,8 +129,8 @@ class MainActivity : AppCompatActivity() {
                     studentGroup.visibility = View.GONE
                 }
                 else -> {
-                    workerGroup.visibility = View.VISIBLE
-                    studentGroup.visibility = View.VISIBLE
+                    workerGroup.visibility = View.GONE
+                    studentGroup.visibility = View.GONE
                 }
             }
         }
