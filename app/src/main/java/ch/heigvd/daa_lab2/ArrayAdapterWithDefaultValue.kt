@@ -18,9 +18,9 @@ class ArrayAdapterWithDefaultValue<T>(
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         if (position == 0) {
-            return TextView(context).apply {
-                height = 0
-                tag = 1 // indique que cette vue est un "hint"
+            return View(context).apply {
+                visibility = View.GONE
+                tag = 1 // indique que cette vue est un "hint" et qu'il ne faut pas la réutiliser
             }
         }
 
