@@ -44,6 +44,9 @@ class ArrayAdapterWithDefaultValue<T>(
         return super.getView(position, convertView, parent)
     }
 
+    /**
+     * Retourne la vue à afficher pour la valeur par défaut.
+     */
     private fun getHintView(parent: ViewGroup): View {
         val view = inflater.inflate(resource, parent, false)
 

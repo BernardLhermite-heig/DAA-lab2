@@ -137,6 +137,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Créé et affiche le DatePicker.
+     */
     private fun showDatePicker() {
         val selectedDate = Calendar.getInstance()
         if (txtBirthday.text.isNotEmpty()) {
@@ -173,6 +176,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Converti la chaîne de caractères donnée en Calendar.
+     * @param dateStr la chaîne de caractères à convertir
+     */
     private fun toCalendar(dateStr: String): Calendar {
         val date = LocalDate.parse(dateStr, dateFormatter)
         return Calendar.getInstance().apply {
@@ -180,6 +187,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    /**
+     * Défini les références vers les différentes vues.
+     */
     private fun init() {
         btnSubmit = findViewById(R.id.ok_button)
         btnDatePicker = findViewById(R.id.main_birthDate_button)
@@ -202,6 +212,10 @@ class MainActivity : AppCompatActivity() {
         workerGroup = findViewById(R.id.group_worker)
     }
 
+    /**
+     * Créé une personne à partir des informations saisies dans les champs si ceux-ci sont valides.
+     * Un Toast est affiché en cas d'erreur.
+     */
     private fun createPerson() {
         val name = txtLastName.text.toString()
         val firstName = txtFirstName.text.toString()
@@ -290,6 +304,9 @@ class MainActivity : AppCompatActivity() {
         resetFields()
     }
 
+    /**
+     * Réinitialise les champs du formulaire.
+     */
     private fun resetFields() {
         txtLastName.text.clear()
         txtFirstName.text.clear()
@@ -312,6 +329,10 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
+    /**
+     * Charge la personne passée en paramètre dans les différents champs de l'activité.
+     * @param person la personne à charger
+     */
     fun loadPerson(person: Person) {
         txtLastName.setText(person.name)
         txtFirstName.setText(person.firstName)
