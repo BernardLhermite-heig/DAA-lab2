@@ -16,6 +16,7 @@ import java.util.*
 /**
  * Activité principale de l'application permettant de créer des personnes (étudiants ou employés).
  * Une personne existente peut être chargée à l'aide de la méthode [loadPerson] après la création de l'activité.
+ *
  * @author Marengo Stéphane, Friedli Jonathan, Silvestri Géraud
  */
 class MainActivity : AppCompatActivity() {

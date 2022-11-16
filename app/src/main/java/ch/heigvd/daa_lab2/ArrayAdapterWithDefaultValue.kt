@@ -8,6 +8,12 @@ import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.LayoutRes
 
+/**
+ * Adapter permettant de définir un texte à la valeur par défaut (null) d'une liste.
+ * La valeur par défaut sera masquée lors de l'ouverture du dropdown.
+ *
+ * @author Marengo Stéphane, Friedli Jonathan, Silvestri Géraud
+ */
 class ArrayAdapterWithDefaultValue<T>(
     context: Context,
     @LayoutRes private val resource: Int,
